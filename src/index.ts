@@ -77,16 +77,16 @@ app.event("emoji_changed", async ({ event }) => {
   );
 });
 
+const accessible = (channel: {
+  is_channel?: boolean;
+  is_archived?: boolean;
+  is_private?: boolean;
+}) => channel.is_channel && !channel.is_archived && !channel.is_private;
+
 app.event("channel_created", async ({ event }) => {
   console.log("Received channel_created event", event);
   if (!channelChannels) return;
-  if (
-    !event.channel.is_channel ||
-    event.channel.is_archived ||
-    event.channel.is_private
-  ) {
-    return;
-  }
+  if (!accessible(event.channel)) return;
 
   await send(
     channelChannels,
@@ -105,9 +105,7 @@ app.event("channel_unarchive", async ({ event }) => {
     console.error("Channel not found", event.channel);
     return;
   }
-  if (!channel.is_channel || channel.is_archived || channel.is_private) {
-    return;
-  }
+  if (!accessible(channel)) return;
 
   await send(
     channelChannels,
