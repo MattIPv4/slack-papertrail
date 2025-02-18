@@ -74,10 +74,18 @@ app.event("emoji_changed", async ({ event }) => {
 app.event("channel_created", async ({ event }) => {
   console.log("Received channel_created event", event);
   if (!channelChannels) return;
+  if (
+    !event.channel.is_channel ||
+    event.channel.is_archived ||
+    event.channel.is_private
+  ) {
+    return;
+  }
 
   await app.client.chat.postMessage({
     channel: channelChannels,
-    text: `Channel created: ${event.channel.name}`,
+    text: `:heavy_plus_sign: <#${event.channel.id}> \`#${event.channel.name}\``,
+    mrkdwn: true,
   });
 });
 
@@ -85,9 +93,21 @@ app.event("channel_unarchive", async ({ event }) => {
   console.log("Received channel_unarchive event", event);
   if (!channelChannels) return;
 
+  const { channel } = await app.client.conversations.info({
+    channel: event.channel,
+  });
+  if (!channel) {
+    console.error("Channel not found", event.channel);
+    return;
+  }
+  if (!channel.is_channel || channel.is_archived || channel.is_private) {
+    return;
+  }
+
   await app.client.chat.postMessage({
     channel: channelChannels,
-    text: `Channel unarchived: ${event.channel}`,
+    text: `:curly_loop: <#${channel.id}> \`#${channel.name}\``,
+    mrkdwn: true,
   });
 });
 
