@@ -1,0 +1,32 @@
+{
+  "name": "slack-papertrail",
+  "version": "1.0.0",
+  "description": "Papertrail of emoji and channel changes in Slack",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "prepare": "husky",
+    "lint": "prettier --check 'src/**/*.ts'",
+    "format": "prettier --write 'src/**/*.ts'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattIPv4/slack-papertrail.git"
+  },
+  "author": "Matt (IPv4) Cowley",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/MattIPv4/slack-papertrail/issues"
+  },
+  "homepage": "https://github.com/MattIPv4/slack-papertrail#readme",
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.5.1"
+  },
+  "dependencies": {
+    "tsx": "^4.19.2"
+  }
+}
