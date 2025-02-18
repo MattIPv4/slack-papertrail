@@ -26,6 +26,17 @@ const app = new Bolt.App({
   appToken,
 });
 
+const send = (channel: string, text: string) =>
+  app.client.chat
+    .postMessage({
+      channel,
+      text,
+      mrkdwn: true,
+    })
+    .catch((error) => {
+      console.error("Failed to send message", { channel, text, error });
+    });
+
 app.event("emoji_changed", async ({ event }) => {
   console.log("Received emoji_changed event", event);
   if (!channelEmoji) return;
@@ -38,37 +49,32 @@ app.event("emoji_changed", async ({ event }) => {
   // Aliases
   if (event.subtype === "add" && event.value?.startsWith("alias:")) {
     const alias = event.value.slice(6);
-    await app.client.chat.postMessage({
-      channel: channelEmoji,
-      text: names
+    await send(
+      channelEmoji,
+      names
         .map(
           (name) =>
             `:linked_paperclips: :${name}: \`:${name}:\` \`:${alias}:\``,
         )
         .join("\n"),
-      mrkdwn: true,
-    });
+    );
     return;
   }
 
   // Removals
   if (event.subtype === "remove") {
-    await app.client.chat.postMessage({
-      channel: channelEmoji,
-      text: names.map((name) => `:heavy_minus_sign: \`:${name}:\``).join("\n"),
-      mrkdwn: true,
-    });
+    await send(
+      channelEmoji,
+      names.map((name) => `:heavy_minus_sign: \`:${name}:\``).join("\n"),
+    );
     return;
   }
 
   // Additions
-  await app.client.chat.postMessage({
-    channel: channelEmoji,
-    text: names
-      .map((name) => `:heavy_plus_sign: :${name}: \`:${name}:\``)
-      .join("\n"),
-    mrkdwn: true,
-  });
+  await send(
+    channelEmoji,
+    names.map((name) => `:heavy_plus_sign: :${name}: \`:${name}:\``).join("\n"),
+  );
 });
 
 app.event("channel_created", async ({ event }) => {
@@ -82,11 +88,10 @@ app.event("channel_created", async ({ event }) => {
     return;
   }
 
-  await app.client.chat.postMessage({
-    channel: channelChannels,
-    text: `:heavy_plus_sign: <#${event.channel.id}> \`#${event.channel.name}\``,
-    mrkdwn: true,
-  });
+  await send(
+    channelChannels,
+    `:heavy_plus_sign: <#${event.channel.id}> \`#${event.channel.name}\``,
+  );
 });
 
 app.event("channel_unarchive", async ({ event }) => {
@@ -104,11 +109,10 @@ app.event("channel_unarchive", async ({ event }) => {
     return;
   }
 
-  await app.client.chat.postMessage({
-    channel: channelChannels,
-    text: `:curly_loop: <#${channel.id}> \`#${channel.name}\``,
-    mrkdwn: true,
-  });
+  await send(
+    channelChannels,
+    `:curly_loop: <#${channel.id}> \`#${channel.name}\``,
+  );
 });
 
 (async () => {
