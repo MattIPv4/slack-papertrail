@@ -20,6 +20,50 @@ Logs a papertrail of emoji creations + removals, as well as channel creations, t
 - Access and enable the app's socket mode, then set `SLACK_APP_TOKEN` (in [`.env`](.env)) to the generated app token.
 - Access the app's event subscriptions and subscribe to the `emoji_changed` + `channel_created` + `channel_unarchive` bot events.
 
+<details>
+<summary>Slack app JSON manifest</summary>
+
+```json
+{
+  "display_information": {
+    "name": "Papertrail",
+    "description": "Papertrail of emoji and channel changes in Slack",
+    "background_color": "#1d213e"
+  },
+  "features": {
+    "bot_user": {
+      "display_name": "Papertrail",
+      "always_online": true
+    }
+  },
+  "oauth_config": {
+    "scopes": {
+      "bot": [
+        "chat:write",
+        "emoji:read",
+        "channels:read"
+      ]
+    }
+  },
+  "settings": {
+    "event_subscriptions": {
+      "bot_events": [
+        "channel_created",
+        "channel_unarchive",
+        "emoji_changed"
+      ]
+    },
+    "interactivity": {
+      "is_enabled": true
+    },
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": true,
+    "token_rotation_enabled": false
+  }
+}
+```
+</details>
+
 ### Create Slack channels
 
 `SLACK_CHANNEL_EMOJI` and `SLACK_CHANNEL_CHANNELS` (in [`.env`](.env)) should be set to the IDs of the Slack channels you want to log emoji and channel papertrails to. Both are optional and will not log to Slack if not set (both could also be the same channel if so desired).
