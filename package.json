@@ -6,7 +6,7 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "tsx --env-file=.env src/index.ts",
-    "prepare": "husky",
+    "prepare": "husky || echo 'Husky not installed'",
     "lint": "prettier --check 'src/**/*.ts'",
     "format": "prettier --write 'src/**/*.ts'"
   },
