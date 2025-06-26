@@ -12,3 +12,9 @@ export const warn = (condition: unknown, message: string): void => {
     console.warn(message);
   }
 };
+
+export const debug = (...args: unknown[]): void => {
+  if (process.env.DEBUG) {
+    console.debug(...args);
+  }
+};

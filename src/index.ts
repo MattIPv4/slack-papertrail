@@ -1,5 +1,5 @@
 import Bolt from "@slack/bolt";
-import { invariant, warn } from "./utils";
+import { invariant, warn, debug } from "./utils";
 
 const botToken = process.env.SLACK_BOT_TOKEN;
 invariant(botToken, "SLACK_BOT_TOKEN is required");
@@ -38,7 +38,7 @@ const send = (channel: string, text: string) =>
     });
 
 app.event("emoji_changed", async ({ event }) => {
-  console.log("Received emoji_changed event", event);
+  debug("Received emoji_changed event", event);
   if (!channelEmoji) return;
 
   // Slack exposes both a name and names, and seems to use both in different contexts
@@ -84,7 +84,7 @@ const accessible = (channel: {
 }) => channel.is_channel && !channel.is_archived && !channel.is_private;
 
 app.event("channel_created", async ({ event }) => {
-  console.log("Received channel_created event", event);
+  debug("Received channel_created event", event);
   if (!channelChannels) return;
   if (!accessible(event.channel)) return;
 
@@ -95,7 +95,7 @@ app.event("channel_created", async ({ event }) => {
 });
 
 app.event("channel_unarchive", async ({ event }) => {
-  console.log("Received channel_unarchive event", event);
+  debug("Received channel_unarchive event", event);
   if (!channelChannels) return;
 
   const { channel } = await app.client.conversations.info({
