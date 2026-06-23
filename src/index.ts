@@ -1,4 +1,4 @@
-import Bolt from "@slack/bolt";
+import { App } from "@slack/bolt";
 import { invariant, warn, debug } from "./utils.ts";
 
 const botToken = process.env.SLACK_BOT_TOKEN;
@@ -19,7 +19,7 @@ warn(
   "SLACK_CHANNEL_CHANNELS is not set, channel papertrail disabled",
 );
 
-const app = new Bolt.App({
+const app = new App({
   token: botToken,
   signingSecret,
   socketMode: true,
@@ -113,7 +113,5 @@ app.event("channel_unarchive", async ({ event }) => {
   );
 });
 
-(async () => {
-  await app.start();
-  console.log("Papertrail is running!");
-})();
+await app.start();
+console.log("Papertrail is running!");
