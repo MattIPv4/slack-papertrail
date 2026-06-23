@@ -13,5 +13,7 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true
   }
 }

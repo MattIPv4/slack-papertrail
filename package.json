@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "start": "tsx --env-file=.env src/index.ts",
+    "start": "node --env-file=.env src/index.ts",
     "prepare": "husky || echo 'Husky not installed'",
     "lint": "prettier --check 'src/**/*.ts'",
     "format": "prettier --write 'src/**/*.ts'"
@@ -27,7 +27,6 @@
     "prettier": "^3.5.1"
   },
   "dependencies": {
-    "@slack/bolt": "^4.2.0",
-    "tsx": "^4.22.4"
+    "@slack/bolt": "^4.2.0"
   }
 }

@@ -1,5 +1,5 @@
 import Bolt from "@slack/bolt";
-import { invariant, warn, debug } from "./utils";
+import { invariant, warn, debug } from "./utils.ts";
 
 const botToken = process.env.SLACK_BOT_TOKEN;
 invariant(botToken, "SLACK_BOT_TOKEN is required");
