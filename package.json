@@ -23,8 +23,8 @@
   "devDependencies": {
     "@types/node": "^24.13.2",
     "husky": "^9.1.7",
-    "lint-staged": "^17.0.7",
-    "prettier": "^3.8.4"
+    "lint-staged": "^17.0.8",
+    "prettier": "^3.9.1"
   },
   "dependencies": {
     "@slack/bolt": "^4.7.3"
