@@ -27,6 +27,6 @@
     "prettier": "^3.9.9"
   },
   "dependencies": {
-    "@slack/bolt": "^5.0.0"
+    "@slack/bolt": "^5.1.0"
   }
 }
