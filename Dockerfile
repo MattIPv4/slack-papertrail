@@ -1,4 +1,4 @@
-FROM node:24-alpine
+FROM node:26-alpine
 
 WORKDIR /usr/app
 COPY package.json package-lock.json tsconfig.json ./
